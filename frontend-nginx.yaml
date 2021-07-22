@@ -2,64 +2,53 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: front-nginx
+  name: nginx
   labels:
-    app: front-nginx
-    tier: frontend
-    version: "1.0"
+    app: nginx
+    tier: backend
+    version: "{{.nginxVersion}}"
 spec:
   type: NodePort
   ports:
-    - port: 80
+  - port: 80
   selector:
-    app: front-nginx
-    tier: frontend
+    app: nginx
+    tier: backend
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: front-nginx
-  labels:
-    app: front-nginx
-    tier: frontend
-    version: "1.0"
+  name: nginx
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: front-nginx
-      tier: frontend
-      version: "1.0"
+      app: nginx
+      tier: backend
+      version: "{{.nginxVersion}}"
   template:
     metadata:
       labels:
-        app: front-nginx
-        tier: frontend
-        version: "1.0"
+        app: nginx
+        tier: backend
+        version: "{{.nginxVersion}}"
     spec:
       containers:
-        - name: front-nginx
-          image: ccr.ccs.tencentyun.com/shuhe/nginx:stable
-          ports:
-            - containerPort: 80
-          resources:
-            limits:
-              cpu: 1
-              memory: 512Mi
-            requests:
-              cpu: 100m
-              memory: 100M
+      - name: nginx-test
+        image: ccr.ccs.tencentyun.com/shuhe/nginx:stable
+        ports:
+        - containerPort: 80
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: front-nginx
+  name: nginx-expose
 spec:
   rules:
-    - host: $EnvName$-nginx-front.app.8slan.com
-      http:
-        paths:
-          - frontend:
-              serviceName: front-nginx
-              servicePort: 80
-            path: /
+  - host: $EnvName$-nginx-expose.app.8slan.com
+    http:
+      paths:
+      - backend:
+          serviceName: nginx
+          servicePort: 80
+        path: /
