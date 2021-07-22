@@ -35,7 +35,7 @@ spec:
     spec:
       containers:
       - name: nginx-test
-        image: ccr.ccs.tencentyun.com/shuhe/nginx:stable
+        image: ccr.ccs.tencentyun.com/trial/nginx-test:20210722155219-2-master
         ports:
         - containerPort: 80
 ---
