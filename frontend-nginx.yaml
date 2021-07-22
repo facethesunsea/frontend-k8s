@@ -42,10 +42,10 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: nginx-expose
+  name: nginx-frontend
 spec:
   rules:
-  - host: $EnvName$-nginx-expose.app.8slan.com
+  - host: $EnvName$-nginx-frontend.app.8slan.com
     http:
       paths:
       - backend:
