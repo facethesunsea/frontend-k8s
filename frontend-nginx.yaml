@@ -53,7 +53,7 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: nginx-front
+  name: front-nginx
 spec:
   rules:
     - host: $EnvName$-nginx-front.app.8slan.com
