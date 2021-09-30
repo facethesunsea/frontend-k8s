@@ -45,7 +45,7 @@ metadata:
   name: nginx-frontend
 spec:
   rules:
-  - host: $EnvName$-$Product$-3-nginx-frontend.app.8slan.com
+  - host: $EnvName$-$Product$-3-nginx-frontend.{{.ingress}}.8slan.com
     http:
       paths:
       - backend:
